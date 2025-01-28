@@ -1,4 +1,4 @@
-import pluginVue, { rules } from 'eslint-plugin-vue'
+import pluginVue from 'eslint-plugin-vue'
 console.log(pluginVue.configs['flat/essential'])
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
