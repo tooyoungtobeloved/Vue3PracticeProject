@@ -1,11 +1,9 @@
 <template>
-  <span>project</span>
   <RouterLink to="/">HOMEVIEW</RouterLink>
   <DataTable v-if="projects" :columns="columns" :data="projects" />
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, h } from 'vue'
 import type { ColumnDef } from '@tanstack/vue-table'
 import type { Tables } from '../../../database/types.ts'
 import { supabase } from '@/lib/supabaseClient.ts'
@@ -48,10 +46,11 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
 ]
 const projects = ref<Tables<'projects'>[] | null>(null)
 
-onMounted(async () => {
+const fetchProjects = async () => {
   const { data, error } = await supabase.from('projects').select()
   console.log(data)
   if (error) console.error(error)
   projects.value = data
-})
+}
+await fetchProjects()
 </script>

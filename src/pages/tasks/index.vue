@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, h } from 'vue'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import type { Tables } from '../../../database/types.ts'
 import { supabase } from '@/lib/supabaseClient.ts'
@@ -67,10 +66,10 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
   },
 ]
 const tasks = ref<Tables<'tasks'>[] | null>(null)
-onMounted(async () => {
+const fetchTasks = async () => {
   const { data, error } = await supabase.from('tasks').select()
-  console.log(data)
   if (error) console.error(error)
   tasks.value = data
-})
+}
+await fetchTasks()
 </script>
