@@ -1,5 +1,5 @@
 <template>
-  <span>project {{ route.params?.id }}</span>
+  <span>project {{ route.params?.slug }}</span>
   <RouterLink to="/">HOMEVIEW</RouterLink>
 </template>
 
