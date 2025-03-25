@@ -8,8 +8,10 @@ import type { Tables } from '../../../database/types.ts'
 import { supabase } from '@/lib/supabaseClient.ts'
 import type { ColumnDef } from '@tanstack/vue-table'
 import { RouterLink } from 'vue-router'
-
-const columns: ColumnDef<Tables<'tasks'>>[] = [
+import type { QueryData } from '@supabase/supabase-js'
+const { page } = usePageStore()
+page.title = 'my tasks'
+const columns: ColumnDef<TaskWithProjects[0]>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-left' }, 'Name'),
@@ -58,16 +60,24 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     },
   },
   {
-    accessorKey: 'project_id',
-    header: () => h('div', { class: 'text-left' }, 'Project Id'),
+    accessorKey: 'projects',
+    header: () => h('div', { class: 'text-left' }, 'Project'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
+      return row.original.projects
+        ? h(
+            RouterLink,
+            { to: `/projects/${row.original.projects.slug}`, class: 'text-left font-medium' },
+            row.original.projects.name,
+          )
+        : null
     },
   },
 ]
-const tasks = ref<Tables<'tasks'>[] | null>(null)
+const tasks = ref<TaskWithProjects | null>(null)
+const taskQuerys = supabase.from('tasks').select(`*, projects(id, name, slug)`)
+type TaskWithProjects = QueryData<typeof taskQuerys>
 const fetchTasks = async () => {
-  const { data, error } = await supabase.from('tasks').select()
+  const { data, error } = await taskQuerys
   if (error) console.error(error)
   tasks.value = data
 }

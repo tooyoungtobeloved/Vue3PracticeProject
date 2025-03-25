@@ -9,7 +9,8 @@ import type { Tables } from '../../../database/types.ts'
 import { supabase } from '@/lib/supabaseClient.ts'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
-
+const { page } = usePageStore()
+page.title = 'projects'
 const columns: ColumnDef<Tables<'projects'>>[] = [
   {
     accessorKey: 'name',
