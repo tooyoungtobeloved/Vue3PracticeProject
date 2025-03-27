@@ -1,3 +1,9 @@
-<script lang="ts">
-export default h('div', { style: { color: 'red' } }, '404 Not Found ')
+<script setup lang="ts">
+import AppErrorPage from '@/components/AppError/AppErrorPage.vue'
+import { useErrorStore } from '@/stores/error'
+useErrorStore().setError({ error: 'Page Not Found', customCode: 404 })
 </script>
+
+<template>
+  <AppErrorPage />
+</template>
