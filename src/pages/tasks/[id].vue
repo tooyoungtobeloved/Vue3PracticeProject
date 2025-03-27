@@ -85,8 +85,8 @@ watch(
   },
 )
 const fetchTask = async () => {
-  const { data, error } = await taskQuery(id)
-  if (error) useErrorStore().setError(error)
+  const { data, error, status } = await taskQuery(id)
+  if (error) useErrorStore().setError({ error, customCode: status })
   task.value = data
 }
 await fetchTask()

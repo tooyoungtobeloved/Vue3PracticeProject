@@ -6,12 +6,25 @@ router.afterEach(() => {
 })
 const errorStore = useErrorStore()
 const error = ref(errorStore.activeError)
-const message = ref('')
 const customCode = ref(0)
 
+const message = ref('')
+const details = ref('')
+const hint = ref('')
+const code = ref('')
+const statusCode = ref(0)
+
 if (error.value) {
-  message.value = error.value.message
-  customCode.value = error.value.customCode ?? 0
+  if ('customCode' in error.value) {
+    message.value = error.value.message
+    customCode.value = error.value.customCode ?? 0
+  } else if ('code' in error.value) {
+    message.value = error.value.message
+    details.value = error.value.details
+    hint.value = error.value.hint
+    code.value = error.value.code
+    statusCode.value = error.value.status ?? 0
+  }
 }
 </script>
 <template>
@@ -20,8 +33,12 @@ if (error.value) {
   >
     <div class="flex flex-col items-center justify-center gap-5">
       <Icon icon="lucide:triangle-alert" class="text-7xl text-destructive" />
-      <h1 class="font-extrabold text-7xl text-secondary">{{ customCode }}</h1>
-      <p class="text-3xl font-extrabold text-primary">{{ message }}</p>
+      <h1 class="font-extrabold text-7xl text-secondary">{{ customCode || code }}</h1>
+      <p class="text-3xl font-extrabold text-primary" v-if="statusCode">
+        Status code: {{ statusCode }}
+      </p>
+      <p v-if="hint">{{ hint }}</p>
+      <p v-if="details">{{ details }}</p>
       <div class="flex flex-col items-center justify-center gap-5 mt-6 font-light">
         <p class="my-2 text-lg text-muted-foreground">
           You'll find lots to explore on the home page.

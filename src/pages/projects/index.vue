@@ -15,9 +15,8 @@ page.title = 'projects'
 const projects = ref<Projects | null>(null)
 
 const fetchProjects = async () => {
-  const { data, error } = await projectQuerys
-  console.log(data)
-  if (error) console.error(error)
+  const { data, error, status } = await projectQuerys
+  if (error) useErrorStore().setError({ error, customCode: status })
   projects.value = data
 }
 await fetchProjects()
