@@ -3,8 +3,11 @@ import AuthLayout from '@/components/Layout/main/AuthLayout.vue'
 import { useErrorStore } from './stores/error'
 const { activeError } = storeToRefs(useErrorStore())
 import AppErrorPage from './components/AppError/AppErrorPage.vue'
+const errorStore = useErrorStore()
+onErrorCaptured((error) => {
+  errorStore.setError({ error })
+})
 </script>
-
 <template>
   <AuthLayout>
     <AppErrorPage v-if="activeError" />

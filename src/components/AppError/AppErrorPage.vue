@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Icon } from '@iconify/vue'
+import AppErrorDevSection from './AppErrorDevSection.vue'
 const router = useRouter()
 router.afterEach(() => {
   useErrorStore().activeError = null
@@ -31,22 +31,6 @@ if (error.value) {
   <section
     class="mx-auto flex justify-center items-center flex-1 p-10 text-center -mt-20 min-h-[90vh]"
   >
-    <div class="flex flex-col items-center justify-center gap-5">
-      <Icon icon="lucide:triangle-alert" class="text-7xl text-destructive" />
-      <h1 class="font-extrabold text-7xl text-secondary">{{ customCode || code }}</h1>
-      <p class="text-3xl font-extrabold text-primary" v-if="statusCode">
-        Status code: {{ statusCode }}
-      </p>
-      <p v-if="hint">{{ hint }}</p>
-      <p v-if="details">{{ details }}</p>
-      <div class="flex flex-col items-center justify-center gap-5 mt-6 font-light">
-        <p class="my-2 text-lg text-muted-foreground">
-          You'll find lots to explore on the home page.
-        </p>
-        <RouterLink to="/">
-          <Button class="max-w-36"> Back to homepage </Button>
-        </RouterLink>
-      </div>
-    </div>
+    <AppErrorDevSection :message :customCode :code :statusCode :hint :details />
   </section>
 </template>
