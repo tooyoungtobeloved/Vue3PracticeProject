@@ -96,7 +96,7 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { supabase } from '@/lib/supabaseClient'
+import { register } from '@/utils/supaAuth'
 const router = useRouter()
 
 const formData = reactive({
@@ -108,18 +108,8 @@ const formData = reactive({
   confirmPassword: '',
 })
 const signUp = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: formData.email,
-    password: formData.password,
-  })
-  if (error) console.log(error)
-  if (data.user) {
-    const { error } = await supabase.from('profiles').insert({
-      id: data.user.id,
-      username: formData.username,
-      full_name: formData.firstName.concat(' ', formData.lastName),
-    })
-    if (error) return console.log('Profile err: ', error)
+  const isRegister = await register(formData)
+  if (isRegister) {
     router.push('/')
   }
 }

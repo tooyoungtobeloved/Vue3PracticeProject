@@ -50,18 +50,14 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { supabase } from '@/lib/supabaseClient'
+import { login } from '@/utils/supaAuth'
 const router = useRouter()
 const formData = reactive({
   email: '',
   password: '',
 })
 const signIn = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
-    email: formData.email,
-    password: formData.password,
-  })
-  if (error) return console.log(error)
-  router.push('/')
+  const isLogined = await login(formData)
+  if (isLogined) router.push('/')
 }
 </script>
