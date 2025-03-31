@@ -13,8 +13,12 @@
     </div>
 
     <nav class="flex flex-col gap-2 justify-between h-full relative">
-      <SiderBarLinks :links="links" />
-      <SiderBarLinks :links="accountLinks" />
+      <div>
+        <SiderBarLinks :links="links" />
+      </div>
+      <div>
+        <SiderBarLinks @actionClicked="handleClick" :links="accountLinks" />
+      </div>
     </nav>
   </aside>
 </template>
@@ -23,6 +27,7 @@
 import { Icon } from '@iconify/vue'
 import SiderBarLinks from './SiderBarLinks.vue'
 import Button from '../ui/button/Button.vue'
+import { logout } from '@/utils/supaAuth'
 const links = [
   {
     title: 'Dashboard',
@@ -54,8 +59,12 @@ const accountLinks = [
   },
   {
     title: 'Sign Out',
-    to: '/signout',
     icon: 'lucide:log-out',
   },
 ]
+async function handleClick(title: string) {
+  if (title === 'Sign Out') {
+    await logout()
+  }
+}
 </script>
