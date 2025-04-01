@@ -32,7 +32,7 @@ export default defineConfig({
       ],
       dts: './auto-imports.d.ts',
       viteOptimizeDeps: true,
-      dirs: ['src/stores'],
+      dirs: ['src/stores/**', 'src/composables/**'],
     }),
     VueRouter({}),
     vue(),

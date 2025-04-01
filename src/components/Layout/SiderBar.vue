@@ -62,9 +62,12 @@ const accountLinks = [
     icon: 'lucide:log-out',
   },
 ]
+const router = useRouter()
 async function handleClick(title: string) {
   if (title === 'Sign Out') {
-    await logout()
+    const isLoggedOut = await logout()
+
+    if (isLoggedOut) router.push('/login')
   }
 }
 </script>

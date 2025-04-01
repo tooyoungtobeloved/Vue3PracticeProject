@@ -34,6 +34,9 @@
               required
             />
           </div>
+          <ul class="text-sm text-left text-red-500" v-if="serverError">
+            <li class="list-disc">{{ serverError }}</li>
+          </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
         <div class="mt-4 text-sm text-center">
@@ -56,8 +59,10 @@ const formData = reactive({
   email: '',
   password: '',
 })
+const { serverError, handleServerError } = useFormErrors()
 const signIn = async () => {
-  const isLogined = await login(formData)
-  if (isLogined) router.push('/')
+  const { error } = await login(formData)
+  if (!error) return router.push('/')
+  handleServerError(error)
 }
 </script>

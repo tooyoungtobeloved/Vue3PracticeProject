@@ -58,7 +58,7 @@ export const columns: ColumnDef<TaskWithProjects[0]>[] = [
         ? h(
             RouterLink,
             { to: `/projects/${row.original.projects.slug}`, class: 'text-left font-medium' },
-            row.original.projects.name,
+            () => row.original?.projects?.name,
           )
         : null
     },

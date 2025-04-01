@@ -55,12 +55,11 @@
             <Button> Comment </Button>
             <div class="flex gap-4">
               <button variant="ghost" @click.prevent>
-                <iconify-icon icon="lucide:paperclip"></iconify-icon>
+                <Icon icon="lucide:paperclip" />
                 <span class="sr-only">Attach file</span>
               </button>
               <button variant="ghost" @click.prevent>
-                <iconify-icon icon="lucide:image-up"></iconify-icon>
-
+                <Icon icon="lucide:image-up" />
                 <span class="sr-only">Upload image</span>
               </button>
             </div>
@@ -74,7 +73,9 @@
 <script lang="ts" setup>
 import { Table, TableCell, TableHead, TableRow } from '@/components/ui/table'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { taskQuery } from '@/utils/supaQueries'
+import { Icon } from '@iconify/vue'
 import type { Task } from '@/utils/supaQueries'
 const task = ref<Task | null>(null)
 const id = useRoute('/tasks/[id]').params.id
